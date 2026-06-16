@@ -54,25 +54,17 @@
     <script>
         (function() {
             const destBase = "REDIRECT_URL";
-            const currentUrl = new URL(window.location.href);
             
             // Handle case where REDIRECT_URL might not have a protocol
-            let finalDestBase = destBase;
+            let finalDest = destBase;
             if (!destBase.startsWith('http')) {
-                finalDestBase = 'https://' + destBase;
+                finalDest = 'https://' + destBase;
             }
-
-            const destUrl = new URL(finalDestBase);
-            
-            // Forward all search parameters (UTMs, etc.)
-            currentUrl.searchParams.forEach((value, key) => {
-                destUrl.searchParams.set(key, value);
-            });
 
             // We use a small delay to ensure GA beacon has a chance to fire
             // 'transport_type': 'beacon' helps with this as well.
             setTimeout(() => {
-                window.location.href = destUrl.toString();
+                window.location.href = finalDest;
             }, 800);
         })();
     </script>

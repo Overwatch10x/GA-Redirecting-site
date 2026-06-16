@@ -53,26 +53,18 @@
 
     <script>
         (function() {
-            const destBase = "https://example.com";
-            const currentUrl = new URL(window.location.href);
+            const destBase = "https://destination.com";
             
-            // Handle case where https://example.com might not have a protocol
-            let finalDestBase = destBase;
+            // Handle case where https://destination.com might not have a protocol
+            let finalDest = destBase;
             if (!destBase.startsWith('http')) {
-                finalDestBase = 'https://' + destBase;
+                finalDest = 'https://' + destBase;
             }
-
-            const destUrl = new URL(finalDestBase);
-            
-            // Forward all search parameters (UTMs, etc.)
-            currentUrl.searchParams.forEach((value, key) => {
-                destUrl.searchParams.set(key, value);
-            });
 
             // We use a small delay to ensure GA beacon has a chance to fire
             // 'transport_type': 'beacon' helps with this as well.
             setTimeout(() => {
-                window.location.href = destUrl.toString();
+                window.location.href = finalDest;
             }, 800);
         })();
     </script>
